@@ -4,3 +4,7 @@
 *.PDF
 doc_data.*
 
+*~
+.*.swp
+.*.~lock
+

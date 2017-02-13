@@ -1,10 +1,14 @@
 #!/usr/bin/python
 
+from sys import argv
 from shlex import split
 from subprocess import Popen, PIPE
 from glob import glob
 from os import remove
 
+#
+# Burst PDF into single pages
+#
 def pdf_burst(filename):
     cmd = "pdftk \""+filename+"\" burst"
     print cmd
@@ -12,21 +16,33 @@ def pdf_burst(filename):
     files = glob("pg_????.pdf")
     return sorted(files)
 
+#
+# Merge PDF pages into single PDF
+#
 def pdf_merge(pages, filename):
     cmd = "pdftk \""+"\" \"".join(pages)+"\" cat output \""+filename+"\""
     print cmd
     Popen(split(cmd)).wait()
 
+#
+# Convert PDF page to Scalable Vector Graphics (SVG)
+#
 def pdf_to_svg(pdf_filename, svg_filename):
     cmd = "inkscape --without-gui \""+pdf_filename+"\" --export-area-page --export-plain-svg=\""+svg_filename+"\""
     print cmd
     Popen(split(cmd)).wait()
 
+#
+# Convert SVG to PDF page
+#
 def svg_to_pdf(svg_filename, pdf_filename):
     cmd = "inkscape --without-gui \""+svg_filename+"\" --export-area-page --export-pdf=\""+pdf_filename+"\""
     print cmd
     Popen(split(cmd)).wait()
 
+#
+# Remove "ALL DEVICES DISCONTINUED" watermark from SVG
+#
 def remove_all_devices_discontinued(filename):
     svg = open(filename).read()
 
@@ -49,8 +65,15 @@ def remove_all_devices_discontinued(filename):
 
     open(filename, "w").write(output)
 
+#
+# Main program
+#
 if __name__ == "__main__":
-    pages = pdf_burst("ispLSI1016DataSheet.PDF")
+    if len(argv) < 2:
+        print "Usage: "+argv[0]+" <filename.pdf>"
+        exit()
+
+    pages = pdf_burst(argv[1])
     print pages
 
     # page by page
@@ -63,10 +86,12 @@ if __name__ == "__main__":
         # convert back to PDF
         svg_to_pdf(svg_filename, pdf_filename)
         # remove temporary SVG
-        remove(svg_filename)
+        if (svg_filename[-4:] == ".svg"):
+            remove(svg_filename)
 
     pdf_merge(pages, "output.pdf")
     
     # clean up
     for pdf_filename in pages:
-        remove(pdf_filename)
+        if (pdf_filename[-4:] == ".pdf"):
+            remove(pdf_filename)
