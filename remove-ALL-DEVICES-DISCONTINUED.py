@@ -1,47 +1,12 @@
 #!/usr/bin/python
 
 from sys import argv
-from shlex import split
-from subprocess import Popen, PIPE
-from glob import glob
 from os import remove
 
-#
-# Burst PDF into single pages
-#
-def pdf_burst(filename):
-    cmd = "pdftk \""+filename+"\" burst"
-    print cmd
-    Popen(split(cmd)).wait()
-    files = glob("pg_????.pdf")
-    return sorted(files)
+from common import *
 
 #
-# Merge PDF pages into single PDF
-#
-def pdf_merge(pages, filename):
-    cmd = "pdftk \""+"\" \"".join(pages)+"\" cat output \""+filename+"\""
-    print cmd
-    Popen(split(cmd)).wait()
-
-#
-# Convert PDF page to Scalable Vector Graphics (SVG)
-#
-def pdf_to_svg(pdf_filename, svg_filename):
-    cmd = "inkscape --without-gui \""+pdf_filename+"\" --export-area-page --export-plain-svg=\""+svg_filename+"\""
-    print cmd
-    Popen(split(cmd)).wait()
-
-#
-# Convert SVG to PDF page
-#
-def svg_to_pdf(svg_filename, pdf_filename):
-    cmd = "inkscape --without-gui \""+svg_filename+"\" --export-area-page --export-pdf=\""+pdf_filename+"\""
-    print cmd
-    Popen(split(cmd)).wait()
-
-#
-# Remove "ALL DEVICES DISCONTINUED" watermark from SVG
+# Remove "ALL DEVICES DISCONTINUED" watermark
 #
 def remove_all_devices_discontinued(filename):
     svg = open(filename).read()
