@@ -1,4 +1,6 @@
 
+*.pyc
+
 # Temporary / Inputs / Outputs
 *.pdf
 *.PDF
