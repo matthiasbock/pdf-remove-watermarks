@@ -44,7 +44,7 @@ if __name__ == "__main__":
     # page by page
     for pdf_filename in pages:
         # convert to SVG
-        svg_filename = pdf_filename[:-4]+".svg"
+        svg_filename = pdf_filename[:-4] + ".svg"
         pdf_to_svg(pdf_filename, svg_filename)
         # remove watermarks
         remove_watermark(svg_filename)
@@ -55,7 +55,7 @@ if __name__ == "__main__":
             remove(svg_filename)
 
     pdf_merge(pages, "output.pdf")
-    
+
     # clean up
     for pdf_filename in pages:
         if (pdf_filename[-4:] == ".pdf"):
