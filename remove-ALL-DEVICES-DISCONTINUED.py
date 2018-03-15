@@ -19,7 +19,7 @@ def remove_all_devices_discontinued(filename):
     target2 = "DISCONTINUED"
     while (svg.find(start_marker, cursor) > -1):
         start = svg.find(start_marker, cursor)
-        stop =  svg.find(stop_marker, start) + len(stop_marker)
+        stop = svg.find(stop_marker, start) + len(stop_marker)
         text = svg[start:stop]
         if (text.find(target1) > -1) and (text.find(target2) > -1):
             # output without this text
@@ -35,7 +35,7 @@ def remove_all_devices_discontinued(filename):
 #
 if __name__ == "__main__":
     if len(argv) < 2:
-        print "Usage: "+argv[0]+" <filename.pdf>"
+        print "Usage: " + argv[0] + " <filename.pdf>"
         exit()
 
     pages = pdf_burst(argv[1])
@@ -44,7 +44,7 @@ if __name__ == "__main__":
     # page by page
     for pdf_filename in pages:
         # convert to SVG
-        svg_filename = pdf_filename[:-4]+".svg"
+        svg_filename = pdf_filename[:-4] + ".svg"
         pdf_to_svg(pdf_filename, svg_filename)
         # remove watermark
         remove_all_devices_discontinued(svg_filename)

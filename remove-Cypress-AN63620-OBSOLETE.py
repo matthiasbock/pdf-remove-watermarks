@@ -20,7 +20,7 @@ def remove_watermark(filename):
             print "Not found."
             return
         start = _start
-    stop =  svg.find(stop_marker, start+1)
+    stop = svg.find(stop_marker, start + 1)
     if start < 0 or stop <= start:
         print "Not found."
         return
@@ -35,7 +35,7 @@ def remove_watermark(filename):
 #
 if __name__ == "__main__":
     if len(argv) < 2:
-        print "Usage: "+argv[0]+" <filename.pdf>"
+        print "Usage: " + argv[0] + " <filename.pdf>"
         exit()
 
     pages = pdf_burst(argv[1])

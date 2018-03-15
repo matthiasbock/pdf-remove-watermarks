@@ -2,6 +2,8 @@
 *.pyc
 
 # Temporary / Inputs / Outputs
+*.svg
+*.SVG
 *.pdf
 *.PDF
 doc_data.*
@@ -9,4 +11,11 @@ doc_data.*
 *~
 .*.swp
 .*.~lock
+
+# Eclipse
+.project
+.cproject
+.pydevproject
+.settings
+.metadata
 
