@@ -3,7 +3,7 @@
 from sys import argv
 from os import remove
 
-from common import *
+from pdf import *
 
 def remove_watermarks(filename):
     svg = open(filename).read()
